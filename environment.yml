@@ -7,3 +7,5 @@ dependencies:
   - ipykernel
   - numpy
   - sqlalchemy
+  - matplotlib
+  - seaborn
