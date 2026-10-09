@@ -1,0 +1,9 @@
+,salary_min_usd,salary_max_usd,salary_midpoint_usd,min_experience_years,posted_year,country_total_ai_jobs,country_avg_salary_usd,country_remote_percentage
+salary_min_usd,1.0,0.975,0.994,0.992,-0.004,0.003,-0.003,-0.004
+salary_max_usd,0.975,1.0,0.994,0.98,-0.005,0.002,-0.002,-0.004
+salary_midpoint_usd,0.994,0.994,1.0,0.992,-0.004,0.003,-0.003,-0.004
+min_experience_years,0.992,0.98,0.992,1.0,-0.004,0.004,-0.003,-0.004
+posted_year,-0.004,-0.005,-0.004,-0.004,1.0,-0.131,-0.1,-0.03
+country_total_ai_jobs,0.003,0.002,0.003,0.004,-0.131,1.0,-0.254,0.116
+country_avg_salary_usd,-0.003,-0.002,-0.003,-0.003,-0.1,-0.254,1.0,-0.128
+country_remote_percentage,-0.004,-0.004,-0.004,-0.004,-0.03,0.116,-0.128,1.0
