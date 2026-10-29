@@ -103,16 +103,18 @@ Key concepts and tools:
 
 COP_3045_2026_Fall_Team_4/
 │
-├── 00_Raw_Data/              # Original datasets and data dictionaries
-├── 01_Data_Collection/       # Data collection and consolidation
-├── 02_Database/              # Database and analytical dataset
-├── 03_Data_Cleaning/         # Data cleaning and preparation
-├── 04_EDA/                   # Exploratory data analysis
-├── 05-Report/                # Reports and visualizations
+├── 00_Raw_Data/          # Original datasets and data dictionaries
+├── 01_Data_Collection/   # Data collection and consolidation
+├── 02_Database/          # Database and analytical dataset
+├── 03_Data_Cleaning/     # Data cleaning and preparation
+├── 04_EDA/               # Exploratory data analysis
+├── 05-Report/            # PDF reports and visualizations
+├── Application/          # Main application entry point
+│   └── main.py           # Runs the complete workflow
 │
-├── README.md                 # Project documentation
-├── environment.yml           # Conda environment configuration
-└── *.md                      # Project task documentation
+├── README.md             # Project documentation
+├── environment.yml       # Conda environment configuration
+└── *.md                  # Project task documentation    
 
 📈 Visualizations & Reporting
 
