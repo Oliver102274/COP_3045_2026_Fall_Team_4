@@ -1,12 +1,13 @@
+from pathlib import Path
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from fpdf import FPDF
 
-# Run this script with the repository root as the working directory.
-data_file = "C:/Users/olive/OneDrive/Desktop/Python Programming 2 course/COP_3045_2026_Fall_Team_4/03_Data_Cleaning/clean_data.csv"
-
-output_dir = "C:/Users/olive/OneDrive/Desktop/Python Programming 2 course/COP_3045_2026_Fall_Team_4/05-Report"
+# Locate inputs and outputs from this script, regardless of the working directory.
+output_dir = Path(__file__).resolve().parent
+data_file = output_dir.parent / "03_Data_Cleaning" / "clean_data.csv"
 
 df = pd.read_csv(data_file)
 
@@ -32,7 +33,7 @@ plt.title("Job Postings by Standardized Job Title")
 plt.xlabel("Number of postings")
 plt.ylabel("Standardized job title")
 plt.tight_layout()
-plt.savefig(output_dir + "/standardized_title_postings.png", dpi=200, bbox_inches="tight")
+plt.savefig(str(output_dir / "standardized_title_postings.png"), dpi=200, bbox_inches="tight")
 plt.close()
 
 experience_values = df["experience_level"].dropna().unique().tolist()
@@ -57,7 +58,7 @@ plt.xlabel("Experience level")
 plt.ylabel("Upper salary bound (USD)")
 plt.xticks(rotation=20, ha="right")
 plt.tight_layout()
-plt.savefig(output_dir + "/salary_by_experience_level.png", dpi=200, bbox_inches="tight")
+plt.savefig(str(output_dir / "salary_by_experience_level.png"), dpi=200, bbox_inches="tight")
 plt.close()
 
 remote_arrangements = df["remote_type"].dropna()
@@ -77,7 +78,7 @@ plt.xlabel("Work arrangement")
 plt.ylabel("Number of postings")
 plt.xticks(rotation=20, ha="right")
 plt.tight_layout()
-plt.savefig(output_dir + "/work_arrangement_distribution.png", dpi=200, bbox_inches="tight")
+plt.savefig(str(output_dir / "work_arrangement_distribution.png"), dpi=200, bbox_inches="tight")
 plt.close()
 
 year_counts = df.groupby("posted_year").size().sort_index()
@@ -89,7 +90,7 @@ plt.xlabel("Posted year")
 plt.ylabel("Number of postings")
 plt.xticks(rotation=30, ha="right")
 plt.tight_layout()
-plt.savefig(output_dir + "/job_postings_by_year.png", dpi=200, bbox_inches="tight")
+plt.savefig(str(output_dir / "job_postings_by_year.png"), dpi=200, bbox_inches="tight")
 plt.close()
 
 most_frequent_title_count = title_counts.max()
@@ -199,22 +200,22 @@ pdf.multi_cell(
 pdf.add_page()
 pdf.set_font("Helvetica", "B", 13)
 pdf.cell(0, 10, "Job Postings by Standardized Job Title", ln=1)
-pdf.image(output_dir + "/standardized_title_postings.png", x=15, y=35, w=180)
+pdf.image(str(output_dir / "standardized_title_postings.png"), x=15, y=35, w=180)
 
 pdf.add_page()
 pdf.set_font("Helvetica", "B", 13)
 pdf.cell(0, 10, "Upper Salary Bound by Experience Level", ln=1)
-pdf.image(output_dir + "/salary_by_experience_level.png", x=15, y=35, w=180)
+pdf.image(str(output_dir / "salary_by_experience_level.png"), x=15, y=35, w=180)
 
 pdf.add_page()
 pdf.set_font("Helvetica", "B", 13)
 pdf.cell(0, 10, "Job Postings by Work Arrangement", ln=1)
-pdf.image(output_dir + "/work_arrangement_distribution.png", x=15, y=35, w=180)
+pdf.image(str(output_dir / "work_arrangement_distribution.png"), x=15, y=35, w=180)
 
 pdf.add_page()
 pdf.set_font("Helvetica", "B", 13)
 pdf.cell(0, 10, "Job Postings by Year", ln=1)
-pdf.image(output_dir + "/job_postings_by_year.png", x=15, y=35, w=180)
+pdf.image(str(output_dir / "job_postings_by_year.png"), x=15, y=35, w=180)
 
 pdf.add_page()
 pdf.set_font("Helvetica", "B", 13)
@@ -253,4 +254,4 @@ pdf.multi_cell(
     "Posting frequencies and annual counts describe this dataset, not verified total market demand or employment growth. The dataset does not establish market representativeness or causation, and does not confirm whether the latest year is complete.",
 )
 
-pdf.output(output_dir + "/project_report.pdf")
+pdf.output(str(output_dir / "project_report.pdf"))

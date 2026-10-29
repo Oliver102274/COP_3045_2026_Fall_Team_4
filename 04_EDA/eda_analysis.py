@@ -1,18 +1,16 @@
+import argparse
+from pathlib import Path
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
 def load_data():
-    """Simple loader with fallbacks for different directory locations."""
-    paths = ["clean_data.csv", "03_Data_Cleaning/clean_data.csv", "../03_Data_Cleaning/clean_data.csv", "04_EDA/clean_data.csv"]
-    for path in paths:
-        try:
-            return pd.read_csv(path)
-        except FileNotFoundError:
-            continue
-    raise FileNotFoundError("Could not find clean_data.csv in any standard directory.")
+    """Load the cleaning stage's output relative to this script."""
+    path = Path(__file__).resolve().parent.parent / "03_Data_Cleaning" / "clean_data.csv"
+    return pd.read_csv(path)
 
-def plot_salary_range_by_experience(df, save_path=None):
+def plot_salary_range_by_experience(df, save_path=None, show=True):
     """Plot 1: Min vs. Max Salary Across Experience Levels."""
     plt.figure(figsize=(10, 6))
     df_melted = df.melt(
@@ -37,9 +35,10 @@ def plot_salary_range_by_experience(df, save_path=None):
     
     if save_path:
         plt.savefig(save_path, bbox_inches='tight')
-    plt.show()
+    if show:
+        plt.show()
 
-def plot_salary_by_years_experience(df, save_path=None):
+def plot_salary_by_years_experience(df, save_path=None, show=True):
     """Plot 2: Salary Distribution by Required Years of Experience."""
     plt.figure(figsize=(10, 6))
     sns.boxplot(
@@ -53,10 +52,11 @@ def plot_salary_by_years_experience(df, save_path=None):
     
     if save_path:
         plt.savefig(save_path, bbox_inches='tight')
-    plt.show()
+    if show:
+        plt.show()
     
 
-def plot_overall_salary_distribution(df, save_path=None):
+def plot_overall_salary_distribution(df, save_path=None, show=True):
     """Plot 3: Overall Min vs. Max Salary Frequency and KDE Distribution."""
     plt.figure(figsize=(11, 6))
     sns.histplot(data=df, x='salary_min_usd', color='teal', label='Min Salary', kde=True, bins=30, alpha=0.5)
@@ -69,10 +69,20 @@ def plot_overall_salary_distribution(df, save_path=None):
     
     if save_path:
         plt.savefig(save_path, bbox_inches='tight')
-    plt.show()
+    if show:
+        plt.show()
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Generate the project's EDA plots.")
+    parser.add_argument("--save-only", action="store_true", help="Save plots without opening windows.")
+    args = parser.parse_args()
+    if args.save_only:
+        plt.switch_backend("Agg")
+        output_dir = Path(__file__).resolve().parent / "output"
+        output_dir.mkdir(parents=True, exist_ok=True)
+
     df = load_data()
-    plot_salary_range_by_experience(df)
-    plot_salary_by_years_experience(df)
-    plot_overall_salary_distribution(df)
+    plot_salary_range_by_experience(df, output_dir / "salary_range_by_experience.png" if args.save_only else None, show=not args.save_only)
+    plot_salary_by_years_experience(df, output_dir / "salary_by_years_experience.png" if args.save_only else None, show=not args.save_only)
+    plot_overall_salary_distribution(df, output_dir / "overall_salary_distribution.png" if args.save_only else None, show=not args.save_only)
+    plt.close("all")

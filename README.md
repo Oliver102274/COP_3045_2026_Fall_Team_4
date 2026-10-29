@@ -143,9 +143,13 @@ Activate the environment using the name defined in environment.yml:
 
 conda activate <environment-name>
 
-4. Explore the code
+4. Run the application
 
-Start with the numbered project folders and review the scripts to understand the workflow. Run the scripts in the appropriate order, taking their dependencies into account.
+From the repository root, run the complete workflow:
+
+```bash
+python Application/main.py
+```
 
 👥 Team Collaboration
 
