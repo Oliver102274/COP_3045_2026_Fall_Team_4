@@ -24,19 +24,13 @@ By transforming raw datasets into structured analytical outputs, the project dem
 
 ⚙️ Project Workflow
 
-📂 Raw Data
-⬇️
-📥 Data Collection & Consolidation
-⬇️
-🗄️ Database & Analytical Dataset
-⬇️
-🧹 Data Cleaning & Preparation
-⬇️
-🔎 Exploratory Data Analysis
-⬇️
-📈 Visualizations & Automated Reporting
-⬇️
-✨ Final Project Report
+1. 📂 Raw Data
+2. 📥 Data Collection & Consolidation
+3. 🗄️ Database & Analytical Dataset
+4. 🧹 Data Cleaning & Preparation
+5. 🔎 Exploratory Data Analysis
+6. 📈 Visualizations & Automated Reporting
+7. ✨ Final Project Report
 
 📊 What We Explore
 
@@ -88,31 +82,33 @@ Findings and conclusions depend on the available datasets and the analyses perfo
 
 *Built collaboratively by a team of four FIU students. 💗*
 
-Key concepts and tools:
+Key concepts in practice:
 
-* Python-based data processing and automation
-* CSV data handling
-* SQLite database management
-* Data cleaning and transformation
-* Exploratory data analysis
-* Data visualization
-* Automated PDF report generation
-* Git and GitHub collaboration
+* CSV data handling and consolidation across related datasets
+* Data cleaning and transformation before analysis
+* Connecting individual scripts into a reproducible workflow
 
 📁 Repository Structure
 
+```text
 COP_3045_2026_Fall_Team_4/
 │
-├── 00_Raw_Data/              # Original datasets and data dictionaries
-├── 01_Data_Collection/       # Data collection and consolidation
-├── 02_Database/              # Database and analytical dataset
-├── 03_Data_Cleaning/         # Data cleaning and preparation
-├── 04_EDA/                   # Exploratory data analysis
-├── 05-Report/                # Reports and visualizations
+├── 00_Raw_Data/                 # Original datasets and data dictionaries
+├── 01_Data_Collection/          # Data collection and consolidation
+├── 02_Database/                 # Database and analytical dataset
+├── 03_Data_Cleaning/            # Data cleaning and preparation
+├── 04_EDA/                      # Exploratory data analysis
+├── 05-Report/                   # Reports and visualizations
+├── Application/                # Application entry point
+│   └── main.py                  # Runs all seven workflow stages
 │
-├── README.md                 # Project documentation
-├── environment.yml           # Conda environment configuration
-└── *.md                      # Project task documentation
+├── README.md                    # Project documentation
+├── environment.yml              # Conda environment configuration
+├── 1_database_task.md            # Project task documentation
+├── 2_analytical_dataset_task.md  # Project task documentation
+├── 3_data_preparation_task.md    # Project task documentation
+└── 6-automated_report_task.md    # Project task documentation
+```
 
 📈 Visualizations & Reporting
 
@@ -129,27 +125,32 @@ The repository also includes a generated PDF report that presents the reporting 
 
 1. Clone the repository
 
-git clone https://github.com/Oliver102274/COP_3045_2026_Fall_Team_4.git
+   ```bash
+   git clone https://github.com/Oliver102274/COP_3045_2026_Fall_Team_4.git
+   ```
 
 2. Navigate to the project folder
 
-cd COP_3045_2026_Fall_Team_4
+   ```bash
+   cd COP_3045_2026_Fall_Team_4
+   ```
 
-3. Create the Conda environment
+3. Create and activate the Conda environment (with Conda installed)
 
-conda env create -f environment.yml
-
-Activate the environment using the name defined in environment.yml:
-
-conda activate <environment-name>
+   ```bash
+   conda env create -f environment.yml
+   conda activate cop3045
+   ```
 
 4. Run the application
 
-From the repository root, run the complete workflow:
+   From the repository root, run the complete workflow:
 
-```bash
-python Application/main.py
-```
+   ```bash
+   python Application/main.py
+   ```
+
+   The final PDF is saved to `05-Report/project_report.pdf`.
 
 👥 Team Collaboration
 
@@ -158,6 +159,11 @@ This project was developed collaboratively by four students as part of a univers
 The project brings together multiple stages of the data science workflow, from collecting and preparing datasets to analyzing results and generating a report.
 
 Each component contributes to the overall pipeline, demonstrating how separate tasks can be integrated into a complete data analysis project.
+
+* **Nicolas Cava** — Data cleaning and preparation.
+* **Ruben Barndzhian** — Non-graphical exploratory data analysis.
+* **Dawid Hunicz** — Graphical exploratory data analysis.
+* **Oliver Hernández** — Automated PDF reporting and application integration.
 
 🎓 Academic Information
 
