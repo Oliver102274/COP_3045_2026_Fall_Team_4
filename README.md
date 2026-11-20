@@ -93,6 +93,7 @@ Key concepts in practice:
 ```text
 COP_3045_2026_Fall_Team_4/
 │
+<<<<<<< HEAD
 ├── 00_Raw_Data/                 # Original datasets and data dictionaries
 ├── 01_Data_Collection/          # Data collection and consolidation
 ├── 02_Database/                 # Database and analytical dataset
@@ -109,6 +110,20 @@ COP_3045_2026_Fall_Team_4/
 ├── 3_data_preparation_task.md    # Project task documentation
 └── 6-automated_report_task.md    # Project task documentation
 ```
+=======
+├── 00_Raw_Data/          # Original datasets and data dictionaries
+├── 01_Data_Collection/   # Data collection and consolidation
+├── 02_Database/          # Database and analytical dataset
+├── 03_Data_Cleaning/     # Data cleaning and preparation
+├── 04_EDA/               # Exploratory data analysis
+├── 05-Report/            # PDF reports and visualizations
+├── Application/          # Main application entry point
+│   └── main.py           # Runs the complete workflow
+│
+├── README.md             # Project documentation
+├── environment.yml       # Conda environment configuration
+└── *.md                  # Project task documentation    
+>>>>>>> 5da6c512d99dbdbc2842cfd6d8f821181839d0f4
 
 📈 Visualizations & Reporting
 
