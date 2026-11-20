@@ -1,12 +1,17 @@
 name: cop3045
 channels:
   - defaults
+  - conda-forge
 dependencies:
-  - python=3.12
-  - pandas
-  - ipykernel
-  - numpy
-  - sqlalchemy
-  - matplotlib
-  - seaborn
-  - fpdf
+  - python=3.14.7
+  - pandas=3.0.6
+  - ipykernel=7.3.0
+  - numpy=2.5.3
+  - sqlalchemy=2.0.52
+  - pillow=12.3.0
+  - pip=26.2.1
+  - pip:
+      - matplotlib==3.11.2
+      - seaborn==0.13.2
+      # Legacy PyFPDF matches the verified report; do not also install fpdf2.
+      - fpdf==1.7.2
