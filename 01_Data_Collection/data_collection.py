@@ -1,9 +1,22 @@
 # Step 1: Import the tools used to locate files and work with table data.
 # Path builds file paths; pandas reads CSV files into tables called DataFrames.
 from pathlib import Path
+import sys
 
 import pandas as pd
 
+
+# Direct script launches put this folder, rather than the repository, on sys.path.
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from data_preparation import (
+    load_csv_datasets,
+    validate_required_columns,
+    validate_required_datasets,
+    validate_unique_keys,
+)
 
 # Step 2: Locate the raw data folder using this Python file's location.
 # __file__ is this script; resolve() gives its absolute path. The first parent
@@ -12,24 +25,27 @@ import pandas as pd
 RAW_DATA_DIR = Path(__file__).resolve().parent.parent / "00_Raw_Data"
 
 
-def load_raw_data():
+def load_raw_data() -> dict[str, pd.DataFrame]:
     """Load each raw CSV into a DataFrame, keyed by its filename without .csv."""
-    # Step 3: Find all CSV files and load them into a dictionary.
-    # glob("*.csv") selects CSV files; sorted() gives a consistent file order.
-    csv_files = sorted(RAW_DATA_DIR.glob("*.csv"))
-    # Stop with a clear error if the folder is missing or contains no CSV files.
-    if not csv_files:
-        raise FileNotFoundError(f"No CSV files found in {RAW_DATA_DIR}")
-    # path.stem removes the extension: ai_jobs.csv becomes the key "ai_jobs".
-    # Each dictionary value is the DataFrame returned by pd.read_csv().
-    return {path.stem: pd.read_csv(path) for path in csv_files}
+    # Step 3: Reuse the package loader with this script's source directory.
+    return load_csv_datasets(RAW_DATA_DIR)
 
 
-def consolidate_data(datasets):
+def consolidate_data(datasets: dict[str, pd.DataFrame]) -> pd.DataFrame:
     """Create a job/skill table using exact keys; retain jobs without skills."""
     # Step 4: Select the four datasets that contain records we can join.
     # data_dictionary describes the source columns, so it is loaded for
     # reference but is not merged into individual job records.
+    validate_required_datasets(datasets)
+    required_columns = {
+        "ai_jobs": ["job_id", "job_title", "country", "posted_year"],
+        "skills_demand": ["job_id"],
+        "job_title_mapping": ["job_title"],
+        "country_ai_trends": ["country", "year"],
+    }
+    for name, columns in required_columns.items():
+        validate_required_columns(datasets[name], name, columns)
+
     jobs = datasets["ai_jobs"]
     skills = datasets["skills_demand"]
     titles = datasets["job_title_mapping"]
@@ -38,16 +54,13 @@ def consolidate_data(datasets):
     # Step 5: Check the keys that must uniquely identify source records.
     # Each job_id identifies one job, each job_title identifies one mapping,
     # and the combination of country AND year identifies one trend record.
-    # isna() detects missing values; duplicated(keys) detects repeated keys.
-    # any() makes these checks True if at least one problem exists.
     # Reject bad keys so a merge cannot silently multiply lookup matches.
     for name, frame, keys in [
         ("ai_jobs", jobs, ["job_id"]),
         ("job_title_mapping", titles, ["job_title"]),
         ("country_ai_trends", trends, ["country", "year"]),
     ]:
-        if frame[keys].isna().any().any() or frame.duplicated(keys).any():
-            raise ValueError(f"{name} must have non-null, unique keys: {keys}")
+        validate_unique_keys(frame, name, keys)
 
     # Step 6: Add standardized_title and role_category using job_title.
     # A left join keeps every job, even if no title mapping matches.
