@@ -11,7 +11,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from data_preparation import (
+from data_preparation import ( #noqa: E402
     load_csv_datasets,
     validate_required_columns,
     validate_required_datasets,
