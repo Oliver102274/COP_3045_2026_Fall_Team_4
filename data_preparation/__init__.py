@@ -4,6 +4,7 @@ from .analytical import (
     build_analytical_dataset, calculate_skill_coverage, print_skill_coverage,
     summarize_skills, validate_job_preservation,
 )
+from .cleaning import DataCleaner
 from .database import create_database, read_source_tables
 from .loading import load_csv_datasets
 from .validation import (
@@ -13,6 +14,7 @@ from .validation import (
 )
 
 __all__ = [
+    "DataCleaner",
     "build_analytical_dataset",
     "calculate_skill_coverage",
     "print_skill_coverage",
