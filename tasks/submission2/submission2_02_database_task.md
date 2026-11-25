@@ -16,7 +16,7 @@ Review:
 - `02_Database/create_analytical_dataset.py`: current read-only table loading and analytical workflow.
 - `data_preparation/loading.py`, `validation.py`, and `__init__.py`: reusable functions from Task 1.
 - `01_Data_Collection/data_collection.py`: package import setup for direct execution.
-- `1_database_task.md` and `2_analytical_dataset_task.md`: original database requirements.
+- `tasks/submission1/1_database_task.md` and `tasks/submission1/2_analytical_dataset_task.md`: original database requirements.
 - `Application/main.py`: existing stage invocation and failure handling.
 - `tests/test_data_loading.py`: existing data preparation tests.
 

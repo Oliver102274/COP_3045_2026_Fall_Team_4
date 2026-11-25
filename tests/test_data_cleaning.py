@@ -15,7 +15,7 @@ from pandas.testing import assert_frame_equal
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
-from data_preparation import DataCleaner
+from data_preparation import DataCleaner #noqa: E402
 
 
 def sample_data(count=3):
