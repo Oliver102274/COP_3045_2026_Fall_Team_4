@@ -14,7 +14,7 @@ Review:
 
 - `01_Data_Collection/data_collection.py`: loading, key validation, joins, exports, and terminal summaries.
 - `02_Database/instantiate_database.py`: future consumer of reusable loading; do not refactor it yet.
-- `1_database_task.md`, `2_analytical_dataset_task.md`, and `3_data_preparation_task.md`: original task format and data rules.
+- `tasks/submission1/1_database_task.md`, `tasks/submission1/2_analytical_dataset_task.md`, and `tasks/submission1/3_data_preparation_task.md`: original task format and data rules.
 - `Application/main.py`: current collection invocation.
 - `05-Report/reporting/`: existing reusable package example.
 

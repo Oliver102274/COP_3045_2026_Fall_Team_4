@@ -13,7 +13,7 @@ Refactor Nicolas Cava's existing cleaning workflow into a meaningful `DataCleane
 Review:
 
 - `03_Data_Cleaning/clean_data.py`: source of truth for current cleaning rules, their order, and terminal summaries.
-- `3_data_preparation_task.md`: original cleaning requirements.
+- `tasks/submission1/3_data_preparation_task.md`: original cleaning requirements.
 - `data_preparation/validation.py` and `__init__.py`: reusable validation and package interface.
 - `02_Database/create_analytical_dataset.py`: upstream CSV and launcher conventions.
 - `Application/main.py`: current cleaning stage invocation and failure handling.

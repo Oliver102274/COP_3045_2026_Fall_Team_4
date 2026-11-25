@@ -15,7 +15,7 @@ Review:
 - `02_Database/create_analytical_dataset.py`: current joins, skills summary, coverage reporting, validation, and export.
 - `data_preparation/database.py`: reusable read-only table loading from Task 2.
 - `data_preparation/validation.py` and `__init__.py`: existing checks and public interface.
-- `2_analytical_dataset_task.md`: original analytical requirements.
+- `tasks/submission1/2_analytical_dataset_task.md`: original analytical requirements.
 - `01_Data_Collection/data_collection.py`: intentionally different job/skill row structure; do not change it.
 - `03_Data_Cleaning/clean_data.py`: downstream analytical CSV consumer; do not change it.
 - `Application/main.py` and existing data preparation tests: invocation and compatibility expectations.
