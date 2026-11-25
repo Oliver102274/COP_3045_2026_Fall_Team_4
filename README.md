@@ -124,7 +124,11 @@ COP_3045_2026_Fall_Team_4/
 |   |-- clean_data.py                     # Run the cleaning workflow
 |   `-- clean_data.csv                    # Prepared dataset for EDA and reporting
 |-- 04_EDA/
-|   |-- nongraphical_analysis.py           # Calculate descriptive analysis tables
+|   |-- nongraphical_analysis.py           # Run the non-graphical EDA workflow
+|   |-- nongraphical/
+|   |   |-- __init__.py                   # Expose NonGraphicalAnalyzer and table builders
+|   |   |-- tables.py                     # Reusable descriptive table functions
+|   |   `-- analyzer.py                   # NonGraphicalAnalyzer class and console report
 |   |-- eda_analysis.py                   # Generate exploratory charts
 |   `-- output/                           # Generated analysis tables and charts
 |-- 05-Report/
@@ -162,6 +166,7 @@ COP_3045_2026_Fall_Team_4/
 |   |-- test_database.py                  # Database creation and reading tests
 |   |-- test_analytical_dataset.py         # Analytical joins and skills coverage tests
 |   |-- test_data_cleaning.py              # Cleaning rules and DataCleaner tests
+|   |-- test_nongraphical_analysis.py      # EDA table and NonGraphicalAnalyzer tests
 |   |-- test_application.py                # Entry-point failure-handling tests
 |   `-- test_reporting.py                 # Report analysis and generation tests
 |-- .gitignore                            # Files excluded from version control
@@ -207,6 +212,24 @@ Collection retains one row per job/skill match. The analytical dataset aggregate
 `DataCleaner(input_path, output_path)` stores `_input_path` and `_output_path` without reading files. Its `run()` method loads, cleans, reports, and saves data; `clean_dataframe(df)` cleans a copy without file access and expects pandas string columns, matching `read_csv(dtype="string")`. Internal helper methods separate duplicate/ID checks, text normalization, numeric conversion, invalid-value rules, and summaries. Underscores mark internal attributes and methods by convention, demonstrating encapsulation.
 
 Cleaning preserves missing values and exact nonblank IDs, rejects conflicting IDs, masks invalid salary/experience values, and retains whole-number posting years from 2020 through 2026. It does not calculate EDA measures or filter to the current year.
+
+### Non-Graphical EDA Architecture
+
+Ruben's `04_EDA/nongraphical` package calculates the descriptive tables. `nongraphical_analysis.py` is a small launcher with a `main()` function and an execution guard; importing it or the package reads and writes no files.
+
+- `tables.py` holds one function per calculation: missing values, numeric summaries, category counts, salary by group, cross-tabulations, correlations, and skill counts. Each takes a DataFrame and returns a new table without printing or file access, so other stages can reuse them. `prepare_data(df)` checks the required columns with `data_preparation`'s `validate_required_columns` and returns a copy with the salary midpoint, ordered labels, and matched-skills flag. `build_tables(df)` returns all nine tables by name.
+- `analyzer.py` defines `NonGraphicalAnalyzer(input_path, output_dir)`. Its constructor stores `_input_path` and `_output_dir` without reading files. `run()` loads the cleaned CSV, prints the ten console sections, saves the tables, and returns them; `load_data()` and `save_tables()` handle the files. Underscores mark internal attributes and methods by convention.
+- A missing or unreadable cleaned CSV, missing columns, an empty dataset, or an output failure produces a descriptive message and a nonzero exit status, which stops the application.
+
+The calculations are unchanged: on the included cleaned data, the nine CSV tables and the console output are identical to those of the earlier single-script version. Skill frequencies describe jobs with a skill match only and do not mean that unmatched jobs require no skills.
+
+To run only this stage from the repository root:
+
+```bash
+python 04_EDA/nongraphical_analysis.py
+```
+
+This requires an existing `03_Data_Cleaning/clean_data.csv` and replaces the nine tables in `04_EDA/output/`.
 
 ### Run Preparation Stages Individually
 
@@ -285,7 +308,7 @@ From the repository root with the environment activated:
 python -B -m unittest discover -s tests -v
 ```
 
-The 64 tests cover loading, source validation, database operations, analytical joins and skills coverage, cleaning, entry-point failure handling, and reporting. Tests use temporary outputs or mocks; the reporting baseline test reads the included cleaned CSV. They do not run the full application or overwrite project outputs. All 64 passed in the existing `cop3045` environment on November 24, 2026.
+The 84 tests cover loading, source validation, database operations, analytical joins and skills coverage, cleaning, non-graphical EDA, entry-point failure handling, and reporting. Tests use temporary outputs or mocks; the reporting and non-graphical EDA baseline tests read the included cleaned CSV. They do not run the full application or overwrite project outputs. The first 64 passed in the existing `cop3045` environment on November 24, 2026. After the non-graphical EDA refactor added 20 tests, all 84 passed on November 25, 2026 in a pip virtual environment with Python 3.14.3 and the package versions pinned in `environment.yml`; they have not been rerun in the Conda environment.
 
 To run one preparation component, substitute its filename:
 
