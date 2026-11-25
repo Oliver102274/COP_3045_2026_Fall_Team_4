@@ -1,5 +1,6 @@
 """Reusable data loading and source validation without import-time file access."""
 
+from .cleaning import DataCleaner
 from .database import create_database, read_source_tables
 from .loading import load_csv_datasets
 from .validation import (
@@ -9,6 +10,7 @@ from .validation import (
 )
 
 __all__ = [
+    "DataCleaner",
     "create_database",
     "read_source_tables",
     "load_csv_datasets",
